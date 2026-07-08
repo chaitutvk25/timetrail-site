@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TimeTrail — Track Your Life</title>
+  <meta name="description" content="TimeTrail: private journal, notes, tasks & expenses. Synced through your own Google Drive, end-to-end encrypted.">
+  <style>
+    :root {
+      --bg: #F7F7F5; --card: #FFFFFF; --text: #111827; --sub: #6B7280;
+      --primary: #2563EB; --border: #E5E7EB;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.65; font-size: 17px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px; }
+    header { padding: 72px 0 48px; text-align: center; }
+    .brand { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sub); font-family: system-ui, sans-serif; }
+    h1 { font-size: 42px; font-weight: 600; margin: 12px 0 16px; letter-spacing: -0.01em; }
+    .tagline { font-size: 20px; color: var(--sub); font-style: italic; }
+    .pitch { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; margin: 8px 0 48px; }
+    h2 { font-size: 24px; font-weight: 600; margin: 48px 0 8px; }
+    h3 { font-size: 19px; font-weight: 600; margin: 28px 0 6px; }
+    p { margin: 10px 0; }
+    ul { margin: 10px 0 10px 22px; }
+    li { margin: 6px 0; }
+    a { color: var(--primary); }
+    .quiet { color: var(--sub); font-size: 15px; }
+    footer { border-top: 1px solid var(--border); margin-top: 72px; padding: 32px 0 56px; text-align: center; color: var(--sub); font-size: 15px; font-family: system-ui, sans-serif; }
+    footer a { color: var(--sub); }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 40px 0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">TimeTrail</div>
+      <h1>Your days, in one private place.</h1>
+      <p class="tagline">Journal, notes, tasks and expenses — synced to your Google Drive, encrypted so only you can read it.</p>
+    </header>
+
+    <div class="pitch">
+      <p>TimeTrail is a personal record of your days: what you thought, what you did, and what you spent — together in one calm, fast app.</p>
+      <p>There's no account to create and no company server holding your life. Your data lives on your device, and if you turn on backup it syncs through <strong>your own Google Drive</strong>, end-to-end encrypted with a passphrase only you know. We couldn't read it if we wanted to.</p>
+    </div>
+
+    <h2>📓 Journal</h2>
+    <p>Write as many entries per day as you like — a morning note, an evening reflection. Flip back to any date with the calendar strip. Group entries, tag them, find them again in seconds.</p>
+
+    <h2>📝 Notes</h2>
+    <p>A clean card grid for everything that isn't tied to a date. Drag cards together to form stacks. Pin a note to today's tasks. Link any note to a journal entry, a task, or an expense with a simple <code>@</code> mention.</p>
+
+    <h2>✅ Tasks &amp; routines</h2>
+    <p>Simple lists with three honest states — not started, started, done. Set due dates, see them on a built-in calendar, and pin anything to today. Routines handle the repeating stuff: pick the weekdays, and each day tracks its own completion. Your Google Calendar events show up alongside, read-only.</p>
+
+    <h2>💸 Expenses</h2>
+    <p>A daily ledger that takes five seconds to use: amount, payment type, an optional note. Daily totals and a breakdown by how you paid. Tag expenses, search by amount, description, or date range. USD, INR and EUR supported.</p>
+
+    <h2>🔍 Search everything</h2>
+    <p>One search box across journal, notes, tasks and expenses — full-text, with filters for date range and tags. Type "10" and find that ₹10 chai.</p>
+
+    <h2>🔗 Everything connects</h2>
+    <p>Mention a task inside a journal entry. Link an expense to the note about the trip. Tap any link to preview and jump. Your days aren't separate silos — your app shouldn't be either.</p>
+
+    <h2>☁️ Sync you can trust</h2>
+    <ul>
+      <li><strong>Your Drive, not our server.</strong> Backups live in a hidden app folder of your own Google Drive. We run no server and hold no copy.</li>
+      <li><strong>Encrypted end-to-end.</strong> Everything is sealed with AES-256 before it leaves your device, protected by a passphrase only you know.</li>
+      <li><strong>Multi-device that actually merges.</strong> Edit the same note on two devices — changes merge, nothing is lost.</li>
+      <li><strong>Works fully offline.</strong> Sync is optional. The app is complete without it.</li>
+    </ul>
+
+    <h2>🔒 Private by design</h2>
+    <ul>
+      <li>No account with us. No ads. No tracking of what you write.</li>
+      <li>Your notes, journals, amounts and tags never leave your device unencrypted.</li>
+      <li>Optional, anonymous crash and usage statistics — never your content.</li>
+      <li>Delete everything, everywhere, any time — one confirmation, gone.</li>
+    </ul>
+
+    <hr class="divider">
+
+    <h2>Questions</h2>
+    <h3>Do I need an account?</h3>
+    <p class="quiet">No. Optionally connect your own Google account for backup — that's between you and Google.</p>
+    <h3>What can TimeTrail see?</h3>
+    <p class="quiet">Nothing you write. Backups are encrypted on your device before upload; only your passphrase unlocks them.</p>
+    <h3>What if I forget my passphrase?</h3>
+    <p class="quiet">From a device that's still unlocked you can set a new one. If no device is unlocked, encrypted backups are unrecoverable — that's the honest cost of real encryption. Your local data stays usable.</p>
+    <h3>What does it cost?</h3>
+    <p class="quiet">TimeTrail is free. Backups use your Google Drive's own storage quota.</p>
+
+    <footer>
+      <p>TimeTrail — Track Your Life</p>
+      <p><a href="privacy.html">Privacy Policy</a> · <a href="mailto:ai-dev@weberon.net">Contact</a></p>
+    </footer>
+  </div>
+</body>
+</html>
