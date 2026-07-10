@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>TimeTrail — FAQ</title>
+  <meta name="description" content="Frequently asked questions about TimeTrail: backup, encryption, passphrases, sync, and your data.">
+  <style>
+    :root {
+      --bg: #F7F7F5; --card: #FFFFFF; --text: #111827; --sub: #6B7280;
+      --primary: #2563EB; --border: #E5E7EB;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: Georgia, 'Times New Roman', serif;
+      line-height: 1.65; font-size: 17px;
+    }
+    .wrap { max-width: 720px; margin: 0 auto; padding: 0 24px 56px; }
+    header { padding: 56px 0 8px; }
+    .brand { font-size: 15px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sub); font-family: system-ui, sans-serif; }
+    .brand a { color: var(--sub); text-decoration: none; }
+    h1 { font-size: 34px; font-weight: 600; margin: 10px 0 4px; }
+    .meta { color: var(--sub); font-size: 15px; margin-bottom: 24px; }
+    h2 { font-size: 20px; font-weight: 600; margin: 36px 0 8px; }
+    p { margin: 10px 0; }
+    ol, ul { margin: 10px 0 10px 22px; }
+    li { margin: 6px 0; }
+    a { color: var(--primary); }
+    strong { font-weight: 600; }
+    .steps { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin: 12px 0; }
+    footer { border-top: 1px solid var(--border); margin-top: 56px; padding-top: 28px; text-align: center; color: var(--sub); font-size: 15px; font-family: system-ui, sans-serif; }
+    footer a { color: var(--sub); }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand"><a href="index.html">TimeTrail</a></div>
+      <h1>Frequently Asked Questions</h1>
+      <p class="meta">Backup, encryption, passphrases, sync — quick answers.</p>
+    </header>
+
+    <h2>Do I need an account to use TimeTrail?</h2>
+    <p>No. The app works fully offline, with everything stored on your device. Connecting a Google account is optional and only used for backup and multi-device sync — that relationship is between you and Google.</p>
+
+    <h2>Where is my data stored?</h2>
+    <p>On your device. If you turn on backup, an encrypted copy also lives in a hidden, app-private folder of <strong>your own Google Drive</strong>. TimeTrail runs no servers and keeps no copy — and it cannot see, read, or touch any of your other Drive files.</p>
+
+    <h2>What is the passphrase for?</h2>
+    <p>It protects your backup. Everything is encrypted on your device with AES-256 <em>before</em> it uploads, using a key sealed by your passphrase. Without the passphrase, the backup is unreadable — to us, to Google, to anyone.</p>
+
+    <h2>Do I use the same passphrase on every device?</h2>
+    <p><strong>Yes — one passphrase per account.</strong> You choose it once, on your first device. Every other device you add simply unlocks with that same passphrase. You never "set up" encryption twice.</p>
+
+    <h2>I forgot my passphrase. Am I locked out of my account?</h2>
+    <p>No — your Google account stays fully usable with TimeTrail. What happens depends on your devices:</p>
+    <ul>
+      <li><strong>If any device is still unlocked</strong> (a phone where TimeTrail backup already works): open Settings there → Change passphrase → set a new one. Nothing is lost.</li>
+      <li><strong>If no device is unlocked</strong> (say you reinstalled everywhere): the old backup can't be decrypted — but you can start fresh with the same account:</li>
+    </ul>
+    <div class="steps">
+      <ol>
+        <li>Install TimeTrail and connect your Google account (skip the unlock prompt).</li>
+        <li>Settings → <strong>Delete all my data &amp; reset</strong> — this clears the old, unreadable backup from your Drive.</li>
+        <li>Set a <strong>new</strong> passphrase and start backing up again — same email, clean slate.</li>
+      </ol>
+    </div>
+    <p>What's permanently lost is only the <em>old data</em> — that's the honest cost of real encryption. If we could recover it without your passphrase, so could Google or a thief.</p>
+
+    <h2>What happens if I edit the same note on two devices?</h2>
+    <p>The changes <strong>merge</strong> — TimeTrail's sync is built on conflict-free merging, so neither device's edits are lost. Regular items (tasks, expenses) resolve to the most recent change.</p>
+
+    <h2>How do I move to a new phone?</h2>
+    <p>Install TimeTrail → connect the same Google account → enter your passphrase when asked. Your backup restores automatically (the app closes briefly to finish — reopen it and your data is there).</p>
+
+    <h2>Why does the app close after a restore or reset?</h2>
+    <p>By design. Applying a restore or reset safely requires a completely fresh start, so the app finishes the job the next time it opens. You'll always see a message first; just reopen TimeTrail.</p>
+
+    <h2>How do I delete everything?</h2>
+    <p>Settings → <strong>Delete all my data &amp; reset</strong>. One confirmation removes your data from the device <em>and</em> your Drive backup. You can also revoke TimeTrail's Google access anytime at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+
+    <h2>What does TimeTrail collect about me?</h2>
+    <p>Never your content. The app reports anonymous crash reports and usage counts (like how many people opened the app today) so we can fix bugs — your notes, journals, tasks, amounts, and tags are never included. Details in the <a href="privacy.html">Privacy Policy</a>.</p>
+
+    <h2>What does it cost?</h2>
+    <p>TimeTrail is free. Backups use your own Google Drive storage quota (they're small).</p>
+
+    <h2>Something else?</h2>
+    <p>Write to us: <a href="mailto:timetrailapp@gmail.com"><strong>timetrailapp@gmail.com</strong></a>.</p>
+
+    <footer>
+      <p>TimeTrail — Track Your Life</p>
+      <p><a href="index.html">Home</a> · <a href="privacy.html">Privacy Policy</a> · <a href="mailto:timetrailapp@gmail.com">Contact</a></p>
+    </footer>
+  </div>
+</body>
+</html>
