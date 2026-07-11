@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TimeTrail demo</title>
+<style>
+  :root { --bg:#F7F7F5; --card:#fff; --text:#111827; --sub:#6B7280; --primary:#2563EB; --border:#E5E7EB; --green:#16A34A; }
+  * { margin:0; padding:0; box-sizing:border-box; font-family:system-ui,-apple-system,sans-serif; }
+  body { background:transparent; display:flex; justify-content:center; align-items:center; min-height:100vh; overflow:hidden; }
+  .stage { position:relative; display:flex; gap:28px; align-items:center; transform:scale(var(--s,1)); }
+  .phone { width:230px; height:470px; background:#0f1117; border-radius:30px; padding:10px; box-shadow:0 18px 44px rgba(0,0,0,.18); position:relative; transition:opacity .8s, transform .8s; }
+  .phone .screen { background:var(--bg); border-radius:22px; height:100%; overflow:hidden; position:relative; display:flex; flex-direction:column; }
+  #phoneB { opacity:0; transform:translateX(40px); }
+  .shown { opacity:1 !important; transform:none !important; }
+  .head { padding:14px 14px 8px; }
+  .head .app { font-size:9px; letter-spacing:.14em; color:var(--sub); text-transform:uppercase; }
+  .head h1 { font-size:15px; color:var(--text); margin-top:2px; }
+  .tabbar { margin-top:auto; display:flex; border-top:1px solid var(--border); background:var(--card); }
+  .tabbar div { flex:1; text-align:center; font-size:8px; color:var(--sub); padding:7px 0 9px; }
+  .tabbar div.on { color:var(--primary); font-weight:700; }
+  .body { flex:1; padding:0 12px; overflow:hidden; }
+  .row { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:9px 10px; font-size:11px; color:var(--text); margin-bottom:7px; display:flex; align-items:center; gap:8px; opacity:0; transform:translateY(6px); transition:all .45s; }
+  .row.in { opacity:1; transform:none; }
+  .cb { width:14px; height:14px; border:1.5px solid #cbd5e1; border-radius:7px; flex:none; position:relative; transition:all .3s; }
+  .row.done .cb { background:var(--green); border-color:var(--green); }
+  .row.done .cb::after { content:'✓'; color:#fff; font-size:9px; position:absolute; top:-1px; left:2.5px; }
+  .row.done span { text-decoration:line-through; color:var(--sub); }
+  .chip { margin-left:auto; font-size:8px; padding:2px 6px; border-radius:99px; background:rgba(37,99,235,.1); color:var(--primary); }
+  .chip.cash { background:rgba(22,163,74,.12); color:var(--green); }
+  .amount { margin-left:auto; font-weight:700; }
+  .caption { position:absolute; left:50%; transform:translateX(-50%); bottom:-38px; white-space:nowrap; font-size:13px; color:var(--sub); font-family:Georgia,serif; font-style:italic; transition:opacity .5s; }
+  .finger { position:absolute; width:26px; height:26px; border-radius:50%; background:rgba(37,99,235,.35); border:2px solid rgba(37,99,235,.55); z-index:9; pointer-events:none; transition:all .55s cubic-bezier(.4,0,.2,1); opacity:0; }
+  .finger.tap { animation:tap .35s; }
+  @keyframes tap { 50% { transform:scale(.7); background:rgba(37,99,235,.6);} }
+  .typing::after { content:''; border-right:1.5px solid var(--primary); animation:blink .7s infinite; margin-left:1px; }
+  @keyframes blink { 50% { border-color:transparent; } }
+  .journal { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:10px; font-size:10.5px; line-height:1.6; color:var(--text); min-height:84px; opacity:0; transition:opacity .4s; }
+  .journal.in { opacity:1; }
+  .sync { position:absolute; top:42%; left:50%; transform:translate(-50%,-50%); font-size:22px; opacity:0; transition:opacity .5s; z-index:10; }
+  .sync.on { opacity:1; animation:pulse 1.2s infinite; }
+  @keyframes pulse { 50% { transform:translate(-50%,-50%) scale(1.25); } }
+  .fab { position:absolute; right:12px; bottom:44px; width:34px; height:34px; border-radius:50%; background:var(--primary); color:#fff; font-size:20px; line-height:32px; text-align:center; box-shadow:0 4px 10px rgba(37,99,235,.4); }
+  @media (max-width:560px) { .stage { --s:.72; } }
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+  <div class="phone" id="phoneA">
+    <div class="screen">
+      <div class="head"><div class="app">TimeTrail</div><h1 id="titleA">Tasks</h1></div>
+      <div class="body" id="bodyA"></div>
+      <div class="fab">+</div>
+      <div class="tabbar" id="tabsA">
+        <div data-t="Summary">Summary</div><div data-t="Tasks" class="on">Tasks</div>
+        <div data-t="Journal">Journal</div><div data-t="Notes">Notes</div><div data-t="Expenses">Expenses</div>
+      </div>
+    </div>
+  </div>
+  <div class="phone" id="phoneB">
+    <div class="screen">
+      <div class="head"><div class="app">TimeTrail · second phone</div><h1>Tasks</h1></div>
+      <div class="body" id="bodyB"></div>
+      <div class="tabbar"><div>Summary</div><div class="on">Tasks</div><div>Journal</div><div>Notes</div><div>Expenses</div></div>
+    </div>
+  </div>
+  <div class="sync" id="sync">☁️</div>
+  <div class="finger" id="finger"></div>
+  <div class="caption" id="cap"></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const cap=t=>{$('cap').style.opacity=0; setTimeout(()=>{$('cap').textContent=t;$('cap').style.opacity=1;},350);};
+function fingerTo(x,y){const f=$('finger');f.style.opacity=1;f.style.left=x+'px';f.style.top=y+'px';}
+async function tap(){$('finger').classList.add('tap');await sleep(360);$('finger').classList.remove('tap');}
+function row(html,cls=''){const d=document.createElement('div');d.className='row '+cls;d.innerHTML=html;return d;}
+function setTab(name){document.querySelectorAll('#tabsA div').forEach(el=>el.classList.toggle('on',el.dataset.t===name));$('titleA').textContent=name;}
+async function typeInto(el,text){for(const ch of text){el.textContent+=ch;await sleep(42);} }
+
+async function run(){
+  const A=$('bodyA');
+  // ── Scene 1: tasks ──
+  cap('Plan the day in seconds…');
+  setTab('Tasks'); A.innerHTML='';
+  const t1=row('<div class="cb"></div><span>Morning run</span>'); A.append(t1);
+  await sleep(500); t1.classList.add('in');
+  fingerTo(205,395); await sleep(600); await tap();       // FAB
+  const t2=row('<div class="cb"></div><span class="typing" id="nt"></span>'); A.append(t2); t2.classList.add('in');
+  await typeInto($('nt'),'Call the bank'); $('nt').classList.remove('typing');
+  await sleep(400);
+  // routine row
+  const r1=row('<div class="cb"></div><span>Meditate</span><span class="chip">routine · daily</span>'); A.append(r1);
+  await sleep(200); r1.classList.add('in');
+  cap('…routines repeat on their own.');
+  // check off
+  fingerTo(38,150); await sleep(650); await tap(); t1.classList.add('done');
+  fingerTo(38,262); await sleep(600); await tap(); r1.classList.add('done');
+  await sleep(1100);
+
+  // ── Scene 2: journal ──
+  cap('Capture the day, your way.');
+  setTab('Journal'); A.innerHTML='';
+  const j=document.createElement('div'); j.className='journal in';
+  const jt=document.createElement('span'); jt.className='typing'; j.append(jt); A.append(j);
+  $('finger').style.opacity=0;
+  await typeInto(jt,'Ran by the river this morning. Cold air, clear head. Signed the lease papers — new chapter starts now.');
+  jt.classList.remove('typing');
+  await sleep(1200);
+
+  // ── Scene 3: expense ──
+  cap('Money, remembered in five seconds.');
+  setTab('Expenses'); A.innerHTML='';
+  const eSum=row('<span>Today</span><span class="amount">$0.00</span>','in'); A.append(eSum);
+  await sleep(500);
+  const e1=row('<span>Chai with Sam</span><span class="chip cash">Cash</span><span class="amount">$3.50</span>'); A.append(e1);
+  fingerTo(205,395); await sleep(500); await tap();
+  e1.classList.add('in'); eSum.querySelector('.amount').textContent='$3.50';
+  await sleep(500);
+  const e2=row('<span>Groceries</span><span class="chip">Card</span><span class="amount">$42.10</span>'); A.append(e2);
+  await sleep(350); e2.classList.add('in'); eSum.querySelector('.amount').textContent='$45.60';
+  await sleep(1300);
+
+  // ── Scene 4: sync ──
+  cap('Two devices. One life. Always in sync.');
+  setTab('Tasks'); A.innerHTML='';
+  const s1=row('<div class="cb"></div><span>Call the bank</span>','in'); A.append(s1);
+  const s2=row('<div class="cb done"></div><span>Morning run</span>','in done'); A.append(s2);
+  $('phoneB').classList.add('shown'); await sleep(900);
+  $('sync').classList.add('on');
+  const B=$('bodyB'); B.innerHTML='';
+  await sleep(900);
+  for(const src of [s1,s2]){ const c=src.cloneNode(true); c.classList.remove('in'); B.append(c); await sleep(250); c.classList.add('in'); }
+  await sleep(700);
+  // new task on B appears on A
+  const nb=row('<div class="cb"></div><span>Book flights ✈</span>'); B.append(nb); await sleep(250); nb.classList.add('in');
+  await sleep(900);
+  const na=nb.cloneNode(true); na.classList.remove('in'); A.append(na); await sleep(250); na.classList.add('in');
+  cap('Encrypted end-to-end — synced through your own Google Drive.');
+  await sleep(2600);
+  $('sync').classList.remove('on'); $('phoneB').classList.remove('shown');
+  await sleep(900);
+  run(); // loop
+}
+run();
+</script>
+</body>
+</html>
