@@ -57,28 +57,18 @@
     <p>No — your Google account stays fully usable with TimeTrail. What happens depends on your devices:</p>
     <ul>
       <li><strong>If any device is still unlocked</strong> (a phone where TimeTrail backup already works): open Settings there → Change passphrase → set a new one. Nothing is lost.</li>
-      <li><strong>If no device is unlocked</strong> (say you reinstalled everywhere): the old backup can't be decrypted — but you can start fresh with the same account:</li>
+      <li><strong>If no device is unlocked</strong> (say you reinstalled everywhere): the old backup can't be decrypted — but you can start fresh with the same account. At the unlock prompt, choose <strong>"Start fresh — erase the old backup"</strong>: it removes the unreadable backup from your Drive (no passphrase needed) and lets you set a new one. Data already on your devices stays on them and gets backed up under the new passphrase.</li>
     </ul>
-    <div class="steps">
-      <ol>
-        <li>Install TimeTrail and connect your Google account (skip the unlock prompt).</li>
-        <li>Settings → <strong>Delete all my data &amp; reset</strong> — this clears the old, unreadable backup from your Drive.</li>
-        <li>Set a <strong>new</strong> passphrase and start backing up again — same email, clean slate.</li>
-      </ol>
-    </div>
-    <p>What's permanently lost is only the <em>old data</em> — that's the honest cost of real encryption. If we could recover it without your passphrase, so could Google or a thief.</p>
+    <p>What's permanently lost is only data that existed <em>nowhere but the old backup</em> — that's the honest cost of real encryption. If we could recover it without your passphrase, so could Google or a thief.</p>
 
     <h2>What happens if I edit the same note on two devices?</h2>
     <p>The changes <strong>merge</strong> — TimeTrail's sync is built on conflict-free merging, so neither device's edits are lost. Regular items (tasks, expenses) resolve to the most recent change.</p>
 
     <h2>How do I move to a new phone?</h2>
-    <p>Install TimeTrail → connect the same Google account → enter your passphrase when asked. Your backup restores automatically (the app closes briefly to finish — reopen it and your data is there).</p>
-
-    <h2>Why does the app close after a restore or reset?</h2>
-    <p>By design. Applying a restore or reset safely requires a completely fresh start, so the app finishes the job the next time it opens. You'll always see a message first; just reopen TimeTrail.</p>
+    <p>Install TimeTrail → connect the same Google account → enter your passphrase when asked. Your backup restores automatically and the app refreshes with your data. (Rarely it may ask you to reopen it — that's the safe path for finishing a restore.)</p>
 
     <h2>How do I delete everything?</h2>
-    <p>Settings → <strong>Delete all my data &amp; reset</strong>. One confirmation removes your data from the device <em>and</em> your Drive backup. You can also revoke TimeTrail's Google access anytime at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
+    <p>Settings → <strong>Delete all my data &amp; reset</strong>. One confirmation removes your data from this device <em>and</em> your Drive backup. Your <strong>other devices</strong> are disconnected from backup &amp; sync at the same time — the data already on them stays there, and you can reconnect each one whenever you want to start backing up again. You can also revoke TimeTrail's Google access anytime at <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</p>
 
     <h2>What does TimeTrail collect about me?</h2>
     <p>Never your content. The app reports anonymous crash reports and usage counts (like how many people opened the app today) so we can fix bugs — your notes, journals, tasks, amounts, and tags are never included. Details in the <a href="privacy.html">Privacy Policy</a>.</p>
